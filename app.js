@@ -10,25 +10,99 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+/* 
+  Write code to use inquirer to gather information about the development team members,
+  and to create objects for each team member (using the correct classes as blueprints!)
+*/
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+// array to save team members
+const teamMembers = [];
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
+// create questions arrays for inquirer
+const newMember = [
+  // recursive question
+  {
+    type: "confirm",
+    name: "continue",
+    message: "Add a new team member?",
+  },
+];
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
+const memberInfo = [
+  // name
+  {
+    type: "input",
+    name: "name",
+    message:
+      "Enter the following information about the new team member:\nName:",
+  },
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+  // id
+  {
+    // type: "number" results in NaN that can't be deleted if validation is false
+    // quickfix: use type: "input" instead
+    // see inquirer issue #866: https://github.com/SBoudrias/Inquirer.js/issues/866
+    type: "input",
+    name: "id",
+    message: "id:",
+    validate: (value) =>
+      isNaN(value) ? "Please enter a valid id number" : true,
+  },
+
+  // email
+  {
+    type: "input",
+    name: "email",
+    message: "email:",
+    // regex email validation: https://www.w3resource.com/javascript/form/email-validation.php
+    validate: (input) =>
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input)
+        ? true
+        : "Please enter a valid email",
+  },
+];
+
+// ask if user wants to add another member
+function askNewMember() {
+  inquirer.prompt(newMember).then(
+    (answer) => (answer.continue ? getMemberInfo() : console.log(teamMembers)) // stop recursion
+  );
+}
+
+// run when user wants to add another member
+function getMemberInfo() {
+  inquirer.prompt(memberInfo).then((answers) => {
+    teamMembers.push(answers);
+    askNewMember();
+  });
+}
+
+askNewMember();
+
+/* 
+  After the user has input all employees desired, call the `render` function (required
+  above) and pass in an array containing all employee objects; the `render` function will
+  generate and return a block of HTML including templated divs for each employee!
+*/
+
+/*
+  After you have your html, you're now ready to create an HTML file using the HTML
+  returned from the `render` function. Now write it to a file named `team.html` in the
+  `output` folder. You can use the variable `outputPath` above target this location.
+  Hint: you may need to check if the `output` folder exists and create it if it
+  does not.
+*/
+
+/*
+  HINT: each employee type (manager, engineer, or intern) has slightly different
+  information; write your code to ask different questions via inquirer depending on
+  employee type.
+*/
+
+/*
+  HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
+  and Intern classes should all extend from a class named Employee; see the directions
+  for further information. Be sure to test out each class and verify it generates an
+  object with the correct structure and methods. This structure will be crucial in order
+  for the provided `render` function to work! ```
+*/
