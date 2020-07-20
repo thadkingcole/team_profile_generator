@@ -62,18 +62,20 @@ const memberInfo = [
   },
 ];
 
-// ask if user wants to add another member
+// recursively ask if user wants to add another member
 function askNewMember() {
-  inquirer.prompt(newMember).then(
-    (answer) => (answer.continue ? getMemberInfo() : console.log(teamMembers)) // stop recursion
-  );
-}
-
-// run when user wants to add another member
-function getMemberInfo() {
-  inquirer.prompt(memberInfo).then((answers) => {
-    teamMembers.push(answers);
-    askNewMember();
+  inquirer.prompt(newMember).then((answer) => {
+    // if user wants to add a new member...
+    if (answer.continue) {
+      // ...get info for new member desired by user
+      inquirer.prompt(memberInfo).then((answers) => {
+        teamMembers.push(answers); // add new member info to teamMembers array
+        askNewMember(); // recursive loop
+      });
+    } else {
+      // stop recursion
+      console.log(teamMembers); // print info for all teamMembers added
+    }
   });
 }
 
