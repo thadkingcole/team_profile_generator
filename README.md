@@ -53,7 +53,10 @@ Please direct any and all questions to [thadkingcole](https://github.com/thadkin
 
 ## Credits
 
-I would like to thank the following people/projects:
+I would like to thank the following people/projects/organizaitons:
+
+- [inquirer.js](https://github.com/SBoudrias/Inquirer.js) for easy console prompts
+- [w3resource](https://w3resource.com/) for [email validation with regex](https://www.w3resource.com/javascript/form/email-validation.php)
 
 [back to Table of Contents](#table-of-contents)
 
