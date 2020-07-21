@@ -1,3 +1,4 @@
+// required modules
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -10,31 +11,24 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-/* 
-  Write code to use inquirer to gather information about the development team members,
-  and to create objects for each team member (using the correct classes as blueprints!)
-*/
-
 // array to save team members
-const teamMembers = [];
+const team = [];
 
 // create questions arrays for inquirer
-const newMember = [
-  // recursive question
-  {
-    type: "confirm",
-    name: "continue",
-    message: "Add a new team member?",
-  },
-];
+// recursive question
+const anotherMember = {
+  name: "continue",
+  type: "confirm",
+  message: "Add another team member?",
+};
 
-const memberInfo = [
+const employeeQuestions = [
   // name
   {
-    type: "input",
     name: "name",
+    type: "input",
     message:
-      "Enter the following information about the new team member:\nName:",
+      "Enter the following information about the new team member:\n? Name:",
   },
 
   // id
@@ -42,8 +36,8 @@ const memberInfo = [
     // type: "number" results in NaN that can't be deleted if validation is false
     // quickfix: use type: "input" instead
     // see inquirer issue #866: https://github.com/SBoudrias/Inquirer.js/issues/866
-    type: "input",
     name: "id",
+    type: "input",
     message: "id:",
     validate: (value) =>
       isNaN(value) ? "Please enter a valid id number" : true,
@@ -51,8 +45,8 @@ const memberInfo = [
 
   // email
   {
-    type: "input",
     name: "email",
+    type: "input",
     message: "email:",
     // regex email validation: https://www.w3resource.com/javascript/form/email-validation.php
     validate: (input) =>
@@ -60,26 +54,82 @@ const memberInfo = [
         ? true
         : "Please enter a valid email",
   },
+
+  // role
+  {
+    name: "role",
+    type: "expand",
+    message: "role:",
+    choices: [
+      {
+        key: "m",
+        name: "Manager",
+        value: "manager",
+      },
+      {
+        key: "e",
+        name: "Engineer",
+        value: "engineer",
+      },
+      {
+        key: "i",
+        name: "Intern",
+        value: "intern",
+      },
+    ],
+  },
+
+  // Manager only - office number
+  {
+    name: "officeNumber",
+    type: "input",
+    message: "Office Number:",
+    when: (member) => member.role === "manager",
+  },
+
+  // Engineer only - github username
+  {
+    name: "github",
+    type: "input",
+    message: "Github Username:",
+    when: (member) => member.role === "engineer",
+  },
+
+  // Intern only - school name
+  {
+    name: "school",
+    type: "input",
+    message: "School:",
+    when: (member) => member.role === "intern",
+  },
 ];
 
 // recursively ask if user wants to add another member
-function askNewMember() {
-  inquirer.prompt(newMember).then((answer) => {
-    // if user wants to add a new member...
-    if (answer.continue) {
-      // ...get info for new member desired by user
-      inquirer.prompt(memberInfo).then((answers) => {
-        teamMembers.push(answers); // add new member info to teamMembers array
-        askNewMember(); // recursive loop
-      });
-    } else {
-      // stop recursion
-      console.log(teamMembers); // print info for all teamMembers added
-    }
+function getEmployeeInfo() {
+  // get info about the first employee
+  inquirer.prompt(employeeQuestions).then((employeeInfo) => {
+    team.push(employeeInfo); // add new team member info to team array
+    // ask if user wants to add another team memmber
+    inquirer.prompt(anotherMember).then((answer) => {
+      // if yes...
+      if (answer.continue) {
+        // ...then recursive call
+        getEmployeeInfo();
+      } else {
+        // print team info to console
+        console.log(team);
+      }
+    });
   });
 }
 
-askNewMember();
+// main
+getEmployeeInfo();
+
+/* 
+  Write code to use inquirer to gather information about the development team members,
+  and to create objects for each team member (using the correct classes as blueprints!)
+*/
 
 /* 
   After the user has input all employees desired, call the `render` function (required
