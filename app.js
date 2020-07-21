@@ -108,7 +108,41 @@ const employeeQuestions = [
 function getEmployeeInfo() {
   // get info about the first employee
   inquirer.prompt(employeeQuestions).then((employeeInfo) => {
-    team.push(employeeInfo); // add new team member info to team array
+    switch (employeeInfo.role) {
+      case "manager":
+        // create new manager with answers from inquirer
+        const man = new Manager(
+          employeeInfo.name,
+          employeeInfo.id,
+          employeeInfo.email,
+          employeeInfo.officeNumber
+        );
+        team.push(man); // add new manger to team
+        break;
+      case "engineer":
+        // create new engineer with answers from inquirer
+        const eng = new Engineer(
+          employeeInfo.name,
+          employeeInfo.id,
+          employeeInfo.email,
+          employeeInfo.github
+        );
+        team.push(eng); // add new engineer to team
+        break;
+      case "intern":
+        // create new intern with answers from inquirer
+        const int = new Intern(
+          employeeInfo.name,
+          employeeInfo.id,
+          employeeInfo.email,
+          employeeInfo.school
+        );
+        team.push(int); // add new intern to team
+        break;
+      default:
+        break;
+    }
+
     // ask if user wants to add another team memmber
     inquirer.prompt(anotherMember).then((answer) => {
       // if yes...
@@ -126,18 +160,18 @@ function getEmployeeInfo() {
 // main
 getEmployeeInfo();
 
-/* 
+/* DONE
   Write code to use inquirer to gather information about the development team members,
   and to create objects for each team member (using the correct classes as blueprints!)
 */
 
-/* 
+/* TODO
   After the user has input all employees desired, call the `render` function (required
   above) and pass in an array containing all employee objects; the `render` function will
   generate and return a block of HTML including templated divs for each employee!
 */
 
-/*
+/* TODO
   After you have your html, you're now ready to create an HTML file using the HTML
   returned from the `render` function. Now write it to a file named `team.html` in the
   `output` folder. You can use the variable `outputPath` above target this location.
@@ -145,14 +179,14 @@ getEmployeeInfo();
   does not.
 */
 
-/*
-  HINT: each employee type (manager, engineer, or intern) has slightly different
+/* HINT
+  Each employee type (manager, engineer, or intern) has slightly different
   information; write your code to ask different questions via inquirer depending on
   employee type.
 */
 
-/*
-  HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
+/* HINT
+  Make sure to build out your classes first! Remember that your Manager, Engineer,
   and Intern classes should all extend from a class named Employee; see the directions
   for further information. Be sure to test out each class and verify it generates an
   object with the correct structure and methods. This structure will be crucial in order
