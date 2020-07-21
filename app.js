@@ -152,12 +152,18 @@ function getEmployeeInfo() {
       } else {
         // print team info to console
         console.log(team);
+        const html = render(team);
+        fs.writeFile(outputPath, html, (err) =>
+          err
+            ? console.log(err)
+            : console.log(`${outputPath} written successfully!`)
+        );
       }
     });
   });
 }
 
-// main
+// main function call
 getEmployeeInfo();
 
 /* DONE
@@ -165,13 +171,13 @@ getEmployeeInfo();
   and to create objects for each team member (using the correct classes as blueprints!)
 */
 
-/* TODO
+/* DONE
   After the user has input all employees desired, call the `render` function (required
   above) and pass in an array containing all employee objects; the `render` function will
   generate and return a block of HTML including templated divs for each employee!
 */
 
-/* TODO
+/* DONE
   After you have your html, you're now ready to create an HTML file using the HTML
   returned from the `render` function. Now write it to a file named `team.html` in the
   `output` folder. You can use the variable `outputPath` above target this location.
