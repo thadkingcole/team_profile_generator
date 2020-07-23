@@ -7,7 +7,7 @@
 
 A console app that generates a webpage with the team's basic info.
 
-![screenshot placeholder](https://placekitten.com/500/500)
+![demo gif](./images/demo.gif)
 
 ## Table of Contents
 
@@ -21,13 +21,50 @@ A console app that generates a webpage with the team's basic info.
 
 ## Installation
 
-`npm i`
+First, clone this repository using your preferred method, either SSH:
+
+```git
+git clone git@github.com:thadkingcole/team_profile_generator.git
+```
+or HTTPS:
+```git
+git clone https://github.com/thadkingcole/team_profile_generator.git
+```
+
+Once the repo is cloned, navigate into its root directory and run "npm i" to install the app.
+
+```console
+cd team_profile_generator
+npm i
+```
+
 
 [back to Table of Contents](#table-of-contents)
 
 ## Usage
 
-this is where usage information will go.
+See [demo video](https://drive.google.com/file/d/1wS6J5vcDSe257hCi_fhgcXvlDJToY5LT/view), or follow the following instructions.
+
+Using your preferred console, navigate to the root directory of the repo where you want markdown files generated. Then enter ```node app.js```
+
+```console
+node app.js
+```
+
+Follow and answer the prompts as they appear on screen.
+
+You'll first be asked to provide information about the team's manager. After that, you'll be asked if you want to add another member. Each time you answer yes, you will be able to add either an engineer or an intern. Once you have added all the desired team members, simply answer no when asked to add another member.
+
+The webpage with your team's information will be output in the output folder titled team.html The file is ignored by git, so you don't have to worry about your team's information being added to the repository.
+
+```console
+./output/team.html
+```
+
+Your webpage will look something like this.
+
+![final result](./images/resultingHTML.png)
+
 
 [back to Table of Contents](#table-of-contents)
 
@@ -41,7 +78,11 @@ Please note that this project is released with a [Contributor Code of Conduct](c
 
 ## Tests
 
-`npm test`
+Several modules were written to support this app, and they can all be tested by running `npm test` in the root directory of this repository.
+
+```console
+npm test
+```
 
 [back to Table of Contents](#table-of-contents)
 
