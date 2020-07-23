@@ -5,7 +5,7 @@
 [![GitHub license](https://img.shields.io/github/license/thadkingcole/team_profile_generator)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-A console app that generates a webpage with the team's basic info.
+A console app that gathers information on an engineering team from the user, then generates a webpage with that team's contact information.
 
 ![demo gif](./images/demo.gif)
 
