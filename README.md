@@ -38,7 +38,6 @@ cd team_profile_generator
 npm i
 ```
 
-
 [back to Table of Contents](#table-of-contents)
 
 ## Usage
