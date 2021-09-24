@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/stevetrilogy/unit10hw#readme",
   "dependencies": {
-    "inquirer": "^7.3.3"
+    "inquirer": "^8.1.5"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^27.2.1"
   }
 }
